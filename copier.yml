@@ -1,0 +1,24 @@
+# questions
+# copier copy --trust -d project_name=bottin-check -d module_name=bottincheck command-template bottin-check
+project_name:
+    type: str
+    help: What is your project name?
+
+module_name:
+    type: str
+    help: What is your Python module name?
+_exclude:
+  - "__pycache__/"
+  - "*.py[oc]"
+  - "build/"
+  - "dist/"
+  - "wheels/"
+  - "*.egg-info"
+  - ".venv"
+  - ".git"
+_tasks:
+  # Strings get executed under system's default shell
+  - "git init"
+  - "git add ."
+  - "git commit -m 'Initial commit'"
+  - "cd {{project_name}} && uv venv && uv build"

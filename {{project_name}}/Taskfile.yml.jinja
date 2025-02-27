@@ -1,0 +1,14 @@
+version: 3
+
+tasks:
+
+  create_venv:
+    desc: "Create virtual environment"
+    cmds:
+      - cmd: uv venv
+      - cmd: source .venv/bin/activate
+      - cmd: uv build
+  test:
+    desc: "Test package"
+    cmds:
+      - cmd: uvx --no-cache --from ./dist/{{project_name | replace("-", "_")}}_cli-0.1.0.tar.gz {{project_name }}-cli hello vincent

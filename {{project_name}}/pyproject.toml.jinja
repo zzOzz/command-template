@@ -1,0 +1,13 @@
+[project]
+name = "{{project_name}}-cli"
+version = "0.1.0"
+description = "{{project_name}} CLI"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dotenv>=0.9.9",
+    "typer>=0.15.1",
+]
+
+[project.scripts]
+{{project_name}}-cli = "{{module_name | replace("-", "_")}}.cli:app"

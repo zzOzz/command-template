@@ -16,6 +16,7 @@ _exclude:
   - "*.egg-info"
   - ".venv"
   - ".git"
+  - "README.md"
 _tasks:
   # Strings get executed under system's default shell
   - "git init"

@@ -1,0 +1,5 @@
+from typer.testing import CliRunner
+from {{module_name}}.cli import app
+
+runner = CliRunner()
+print(runner.invoke(app, ["hello", "Berlin"]).output)

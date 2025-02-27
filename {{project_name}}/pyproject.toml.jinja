@@ -11,3 +11,9 @@ dependencies = [
 
 [project.scripts]
 {{project_name}}-cli = "{{module_name | replace("-", "_")}}.cli:app"
+
+[dependency-groups]
+dev = [
+    "typer>=0.15.1",
+    "dotenv>=0.9.9",
+]

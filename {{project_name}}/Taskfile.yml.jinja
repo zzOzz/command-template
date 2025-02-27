@@ -2,12 +2,12 @@ version: 3
 
 tasks:
 
-  create_venv:
+  default:
     desc: "Create virtual environment"
     cmds:
       - cmd: uv venv
-      - cmd: source .venv/bin/activate
       - cmd: uv build
+      - cmd: uv sync
   test:
     desc: "Test package"
     cmds:

@@ -1,0 +1,59 @@
+import typer
+from dotenv import load_dotenv
+import appdirs
+from pathlib import Path
+import json
+from io import StringIO
+import os
+
+app = typer.Typer()
+config_file = Path(appdirs.user_data_dir('org.zapto.20100.{{project_name}}'), 'config.json')
+def _init():
+    """Initialize the app and load environment variables."""
+    # Create default directory and file if they don't exist
+    if not config_file.parent.exists():
+        config_file.parent.mkdir(parents=True)
+    if not config_file.exists():
+        # Copy default streams file if it exists in the module directory
+        module_dir = Path(__file__).parent
+        default_config = module_dir / 'default_config.json'
+        if default_config.exists():
+            with open(default_config, 'r') as src, open(config_file, 'w') as dst:
+                dst.write(src.read())
+        else:
+            with open(config_file, 'w') as f:
+                json.dump({}, f)
+    with open(config_file, 'r') as f:
+        config = json.load(f)
+        if 'environment' in config:
+            # Convert environment dict to string with newline-separated KEY=VALUE pairs
+            env_string = '\n'.join(f"{key}={value}" for key, value in config['environment'].items())
+            env_stream = StringIO(env_string)
+            load_dotenv(stream=env_stream)
+    return config_file
+
+def _config():
+    """Load the configuration file."""
+    with open(config_file, 'r') as f:
+        config = json.load(f)
+    return config
+
+@app.command()
+def hello(name: str):
+    print(f"Hello {name} from {os.getenv('PROJECT_NAME')}")
+
+@app.command()
+def goodbye(name: str):
+    print(f"Goodbye {name}")
+
+@app.command()
+def edit_config():
+    """Edit the configuration file."""
+    editor = os.environ.get('EDITOR', 'vim')
+    config_file = Path(appdirs.user_data_dir('org.zapto.20100.{{project_name}}'), 'config.json')
+    os.system(f'{editor} "{config_file}"')
+
+def getApp():
+    """Get the app instance."""
+    _init()
+    return app

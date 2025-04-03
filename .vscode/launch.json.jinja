@@ -2,9 +2,14 @@
   "version": "0.2.0",
   "configurations": [
   {
-          "name": "Python: CWD File (Integrated Terminal)",
+          "type": "debugpy",
+          "name": "Debug {{project_name}}",
           "request": "launch",
-          "program": "${file}",
+          "module": "{{module_name}}",
+          "args": [
+              "hello",
+              "vincent",
+          ],
           "console": "integratedTerminal",
           "cwd": "${workspaceFolder}/{{project_name}}",
           "purpose":["debug-in-terminal"]
